@@ -1,7 +1,6 @@
 import { Navigate, Outlet } from "react-router";
 import { Loading } from "../components/molecules/Loading";
 import { useUser } from "../store/auth.store";
-import { logout } from "../services/auth.service";
 
 interface PrivateRouterProps {
   roles: string[];
@@ -18,8 +17,7 @@ export function PrivateRouter({ roles }: PrivateRouterProps) {
     return <Outlet />;
   }
 
-  if (isError) {
-    logout();
+  if (isError || !data) {
     return <Navigate to="/login" />;
   }
 

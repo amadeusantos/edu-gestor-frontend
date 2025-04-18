@@ -18,6 +18,18 @@ export interface UserSchema {
   enabled: boolean;
 }
 
+export interface UserCreateSchema {
+  email: string;
+  role: KeyRoleEnum;
+  password: string;
+}
+
+export interface UserUpdateSchema {
+  email: string;
+  role: KeyRoleEnum;
+  password?: string;
+}
+
 
 export async function usersPagination(
   search?: string,
@@ -34,6 +46,18 @@ export async function usersPagination(
 
 export async function getUser(id: string) {
   return await request.get<UserSchema>(`/users/${id}`);
+}
+
+export async function getUserByEmail(email: string) {
+  return await request.get<UserSchema>(`/users/email/${email}`);
+}
+
+export async function createUser(user: UserCreateSchema) {
+    await request.post("/users", user)
+}
+
+export async function updateUser(id: string, user: UserUpdateSchema) {
+    await request.put(`/users/${id}`, user)
 }
 
 export async function updateEnabledUser(id: string, enabled: boolean) {

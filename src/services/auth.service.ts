@@ -24,6 +24,6 @@ export async function authenticated() {
     return await request.get<RoleSchema>("/auth/authenticated");
 }
 
-export function logout() {
+export async function logout() {
     Cookies.remove("token");
 }

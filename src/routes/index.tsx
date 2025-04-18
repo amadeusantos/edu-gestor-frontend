@@ -1,8 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router";
-import { Login } from "../components/pages/Login";
 import { PrivateRouter } from "./PrivateRouter";
 import { AuthRouter } from "./AuthRouter";
-import { User } from "../components/pages/User";
+import { User, Login, UserCreate, UserUpdate } from "../components/pages";
 import { RedirectRouter } from "./RedirectRouter";
 
 export function AppRoutes() {
@@ -14,11 +13,25 @@ export function AppRoutes() {
         </Route>
         <Route element={<PrivateRouter roles={["ADMIN"]} />}>
           <Route path="/users" element={<User />} />
+          <Route path="/users/new" element={<UserCreate />} />
+          <Route path="/users/:id" element={<UserUpdate />} />
         </Route>
-        <Route element={<PrivateRouter roles={["ADMIN", "STUDENT", "PROFESSOR", "COORDINATOR", "RESPONSIBLE"]} />}>
+        <Route
+          element={
+            <PrivateRouter
+              roles={[
+                "ADMIN",
+                "STUDENT",
+                "PROFESSOR",
+                "COORDINATOR",
+                "RESPONSIBLE",
+              ]}
+            />
+          }
+        >
           <Route path="/build" element={"Em construção"} />
         </Route>
-        <Route path="*" element={<RedirectRouter />}/>
+        <Route path="*" element={<RedirectRouter />} />
       </Routes>
     </BrowserRouter>
   );

@@ -17,7 +17,7 @@ export function RedirectRouter() {
     return <Loading />;
   }
 
-  if (isError) {
+  if (!isLoading && isError) {
     return <Navigate to="/login" />;
   }
 

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import type { MenuProps } from "antd";
-import { Layout, Menu } from "antd";
-import { Users } from "phosphor-react";
+import { Button, Layout, Menu } from "antd";
+import { SignOut, Users } from "phosphor-react";
 import { Link, useLocation } from "react-router";
+import { useLogout } from "../../../store/auth.store";
 
 const { Sider } = Layout;
 
@@ -22,48 +23,56 @@ function getItem(
   } as MenuItem;
 }
 
-const items: MenuItem[] = [
-  getItem(
-    "Usuários",
-    "users",
-    <Link to={{ pathname: "/users" }}>
-      <Users />
-    </Link>
-  ),
-  // getItem(
-  //   "Alunos",
-  //   "students",
-  //   <Link to={{ pathname: "/students" }}>
-  //     <Student />
-  //   </Link>
-  // ),
-  // getItem(
-  //   "Professores",
-  //   "professors",
-  //   <Link to={{ pathname: "/professors" }}>
-  //     <User />
-  //   </Link>
-  // ),
-  // getItem(
-  //   "Coordenadores",
-  //   "coordinators",
-  //   <Link to={{ pathname: "/coordinators" }}>
-  //     <User />
-  //   </Link>
-  // ),
-  // getItem("Turmas", "3", <Star />),
-  // getItem("Cursos", "4", <Star />),
-  // getItem("Disciplinas", "6", <Star />),
-];
-
 interface SideBarTemplateProps {
   children: React.ReactElement;
 }
 
 export function SideBarTemplate({ children }: SideBarTemplateProps) {
+  const { mutate: logout } = useLogout();
   const { pathname } = useLocation();
   const select = pathname.split("/")[1];
   const [collapsed, setCollapsed] = useState(false);
+
+  const items: MenuItem[] = [
+    getItem(
+      "Usuários",
+      "users",
+      <Link to={{ pathname: "/users" }}>
+        <Users />
+      </Link>
+    ),
+    getItem(
+      "",
+      "",
+      <Button type="link" onClick={() => logout()}>
+        <SignOut /> Logout
+      </Button>
+    ),
+    // getItem(
+    //   "Alunos",
+    //   "students",
+    //   <Link to={{ pathname: "/students" }}>
+    //     <Student />
+    //   </Link>
+    // ),
+    // getItem(
+    //   "Professores",
+    //   "professors",
+    //   <Link to={{ pathname: "/professors" }}>
+    //     <User />
+    //   </Link>
+    // ),
+    // getItem(
+    //   "Coordenadores",
+    //   "coordinators",
+    //   <Link to={{ pathname: "/coordinators" }}>
+    //     <User />
+    //   </Link>
+    // ),
+    // getItem("Turmas", "3", <Star />),
+    // getItem("Cursos", "4", <Star />),
+    // getItem("Disciplinas", "6", <Star />),
+  ];
 
   return (
     <Layout hasSider style={{ minHeight: "100vh", width: "100vw" }}>
