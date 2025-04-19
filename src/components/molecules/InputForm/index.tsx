@@ -1,3 +1,4 @@
+import { Store, StoreValue } from "antd/es/form/interface";
 import * as S from "./style";
 import { Rule } from "antd/es/form";
 
@@ -8,6 +9,7 @@ interface InputFormProps {
   type?: "TextArea" | "Password";
   rows?: number;
   disabled?: boolean;
+  normalize?: ((value: StoreValue, prevValue: StoreValue, allValues: Store) => StoreValue);
 }
 
 const setContent = (type?: "TextArea" | "Password") => {

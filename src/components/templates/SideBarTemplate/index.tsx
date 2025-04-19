@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import type { MenuProps } from "antd";
 import { Button, Layout, Menu } from "antd";
-import { SignOut, Users } from "phosphor-react";
+import { SignOut, User, Users } from "phosphor-react";
 import { Link, useLocation } from "react-router";
 import { useLogout } from "../../../store/auth.store";
 
@@ -41,13 +41,6 @@ export function SideBarTemplate({ children }: SideBarTemplateProps) {
         <Users />
       </Link>
     ),
-    getItem(
-      "",
-      "",
-      <Button type="link" onClick={() => logout()}>
-        <SignOut /> Logout
-      </Button>
-    ),
     // getItem(
     //   "Alunos",
     //   "students",
@@ -55,13 +48,13 @@ export function SideBarTemplate({ children }: SideBarTemplateProps) {
     //     <Student />
     //   </Link>
     // ),
-    // getItem(
-    //   "Professores",
-    //   "professors",
-    //   <Link to={{ pathname: "/professors" }}>
-    //     <User />
-    //   </Link>
-    // ),
+    getItem(
+      "Professores",
+      "professors",
+      <Link to={{ pathname: "/professors" }}>
+        <User />
+      </Link>
+    ),
     // getItem(
     //   "Coordenadores",
     //   "coordinators",
@@ -72,6 +65,13 @@ export function SideBarTemplate({ children }: SideBarTemplateProps) {
     // getItem("Turmas", "3", <Star />),
     // getItem("Cursos", "4", <Star />),
     // getItem("Disciplinas", "6", <Star />),
+    getItem(
+      "",
+      "",
+      <Button type="link" onClick={() => logout()}>
+        <SignOut /> Logout
+      </Button>
+    ),
   ];
 
   return (
