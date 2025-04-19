@@ -5,3 +5,5 @@ export interface PaginationSchema<T> {
     total_items: number;
     results: T[]
 }
+
+export type SexEnum = "MALE" | "FEMALE" | "OTHER"

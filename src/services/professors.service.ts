@@ -1,7 +1,5 @@
 import { request } from "./api";
-import { PaginationSchema } from "./type";
-
-type SexEnum = "MALE" | "FEMALE" | "OTHER"
+import { PaginationSchema, SexEnum } from "./type";
 
 export interface ProfessorCreateSchema {
   fullname: string;

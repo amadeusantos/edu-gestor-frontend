@@ -7,7 +7,7 @@ const routers = {
   PROFESSOR: "/build",
   COORDINATOR: "/build",
   ADMIN: "/users",
-  RESPONSIBLE: "/build",
+  RESPONSIBLE: "/professors",
 };
 
 export function RedirectRouter() {

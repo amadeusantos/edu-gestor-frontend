@@ -8,7 +8,10 @@ import {
   UserUpdate,
   Professor,
   ProfessorCreate,
-  ProfessorUpdate
+  ProfessorUpdate,
+  Student,
+  StudentCreate,
+  StudentEdit,
 } from "../components/pages";
 import { RedirectRouter } from "./RedirectRouter";
 
@@ -28,6 +31,9 @@ export function AppRoutes() {
           <Route path="/professors" element={<Professor />} />
           <Route path="/professors/new" element={<ProfessorCreate />} />
           <Route path="/professors/:id" element={<ProfessorUpdate />} />
+          <Route path="/students" element={<Student />} />
+          <Route path="/students/new" element={<StudentCreate />} />
+          <Route path="/students/:id" element={<StudentEdit />} />
         </Route>
         <Route
           element={

@@ -5,6 +5,9 @@ import { UserUpdate } from "./UserUpdate";
 import { Professor } from "./Professor";
 import { ProfessorCreate } from "./ProfessorCreate";
 import { ProfessorUpdate } from "./ProfessorUpdate";
+import { Student } from "./Student";
+import { StudentCreate } from "./StudentCreate";
+import { StudentEdit } from "./StudentEdit";
 
 export {
   Login,
@@ -14,4 +17,7 @@ export {
   Professor,
   ProfessorCreate,
   ProfessorUpdate,
+  Student,
+  StudentCreate,
+  StudentEdit,
 };
