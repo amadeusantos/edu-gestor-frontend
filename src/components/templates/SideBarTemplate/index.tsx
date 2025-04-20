@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import type { MenuProps } from "antd";
 import { Button, Layout, Menu } from "antd";
-import { SignOut, Student, User, Users } from "phosphor-react";
+import { Chalkboard, SignOut, Student, User, Users } from "phosphor-react";
 import { Link, useLocation } from "react-router";
 import { useLogout } from "../../../store/auth.store";
 
@@ -55,14 +55,13 @@ export function SideBarTemplate({ children }: SideBarTemplateProps) {
         <User />
       </Link>
     ),
-    // getItem(
-    //   "Coordenadores",
-    //   "coordinators",
-    //   <Link to={{ pathname: "/coordinators" }}>
-    //     <User />
-    //   </Link>
-    // ),
-    // getItem("Turmas", "3", <Star />),
+    getItem(
+      "Turmas",
+      "classrooms",
+      <Link to={{ pathname: "/classrooms" }}>
+        <Chalkboard />
+      </Link>
+    ),
     // getItem("Cursos", "4", <Star />),
     // getItem("Disciplinas", "6", <Star />),
     getItem(

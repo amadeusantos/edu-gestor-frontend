@@ -1,37 +1,36 @@
-import {
-  Button,
-  Input,
-  Layout,
-  Modal,
-  Table,
-  TableColumnsType,
-  Tag,
-} from "antd";
-import { Content } from "antd/es/layout/layout";
-import { Pencil, Trash } from "phosphor-react";
-import { Link } from "react-router";
-import { StudentSchema } from "../../../services/student.service";
 import { useState } from "react";
-import { Title } from "./style";
 import {
-  useDeleteStudent,
-  useListStudents,
-} from "../../../store/students.store";
+  useDeleteClassroom,
+  useListClassrooms,
+} from "../../../store/classrooms.store";
 import { SideBarTemplate } from "../../templates/SideBarTemplate";
+import { Button, Input, Layout, Modal, Table, TableColumnsType } from "antd";
+import { Content } from "antd/es/layout/layout";
+import { ClassroomSchema } from "../../../services/classrooms.service";
+import { Title } from "../../ions";
+import { Link } from "react-router";
+import { ShiftEnum } from "../../../services/type";
+import { Pencil, Trash } from "phosphor-react";
 
 const config = {
-  title: "Remover Aluno",
-  content: "Deseja remover esse aluno?",
+  title: "Remover Turma",
+  content: "Deseja remover esse Turma?",
 };
 
-export function Student() {
+const Shifts = {
+  MORNING: "Manhã",
+  AFTERNOON: "Tarde",
+  NIGHT: "Noite",
+};
+
+export function Classroom() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState<string | undefined>(undefined);
-  const { data, isLoading } = useListStudents(page, 10, search);
-  const { mutate: deleteStudent } = useDeleteStudent();
+  const { data, isLoading } = useListClassrooms(page, 10, search);
+  const { mutate: deleteClassroom } = useDeleteClassroom();
   const [modal, contextHolder] = Modal.useModal();
   const openModalDelete = (id: string) => {
-    const actionDelete = () => deleteStudent(id);
+    const actionDelete = () => deleteClassroom(id);
 
     modal.confirm({ ...config, onOk: actionDelete });
   };
@@ -48,30 +47,18 @@ export function Student() {
     setSearch(undefined);
   };
 
-  const columns: TableColumnsType<StudentSchema> = [
-    { title: "Nome", dataIndex: "fullname" },
-    { title: "Matrícula", dataIndex: "enrollment" },
+  const columns: TableColumnsType<ClassroomSchema> = [
+    { title: "Turma", dataIndex: "name" },
     {
-      title: "Turma",
-      dataIndex: "classroom",
-      render: (value) => (
-        <Tag color={value ? "blue" : "red"}>{value ? value.name : "Sem Turma"}</Tag>
-      ),
-    },
-    {
-      title: "Status",
-      dataIndex: "archived",
-      render: (value) => (
-        <Tag color={value ? "default" : "success"}>
-          {value ? "Arquivado" : "Ativo"}
-        </Tag>
-      ),
+      title: "Turno",
+      dataIndex: "shift",
+      render: (value: ShiftEnum) => Shifts[value],
     },
     {
       title: "Ações",
       render: (_, record) => (
         <div style={{ display: "flex", gap: "1em" }}>
-          <Link to={{ pathname: `/students/${record.id}` }}>
+          <Link to={{ pathname: `/classrooms/${record.id}` }}>
             <Button color="primary" variant="solid">
               <Pencil size={28} />
             </Button>
@@ -93,26 +80,27 @@ export function Student() {
   return (
     <SideBarTemplate>
       <Layout style={{ padding: "1rem" }}>
-        <Title>Alunos</Title>
+        <Title>Turmas</Title>
         <div style={{ display: "flex", gap: "1rem", justifyContent: "end" }}>
           <div>
             <Input.Search
               onClear={clearFilterSearch}
               onSearch={filtersSearch}
               allowClear
-              placeholder="procurar aluno"
+              placeholder="procurar turma"
               size="large"
             />
           </div>
-          <Link to="/students/new">
+          <Link to="/classrooms/new">
             <Button type="primary" size="large">
-              Adicionar Aluno
+              Adicionar Turma
             </Button>
           </Link>
         </div>
 
         <Content>
-          <Table<StudentSchema>
+          <Table<ClassroomSchema>
+            rowKey="id"
             pagination={{
               position: ["bottomCenter"],
               onChange: (page) => {
@@ -124,7 +112,7 @@ export function Student() {
             }}
             size="large"
             columns={columns}
-            dataSource={data?.results}
+            dataSource={data ? data.results : []}
             style={{ padding: "2em" }}
             loading={isLoading}
           />

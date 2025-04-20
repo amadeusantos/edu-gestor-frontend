@@ -8,6 +8,9 @@ import { ProfessorUpdate } from "./ProfessorUpdate";
 import { Student } from "./Student";
 import { StudentCreate } from "./StudentCreate";
 import { StudentEdit } from "./StudentEdit";
+import { Classroom } from "./Classroom";
+import { ClassroomCreate } from "./ClassroomCreate";
+import { ClassroomEdit } from "./ClassroomEdit";
 
 export {
   Login,
@@ -20,4 +23,7 @@ export {
   Student,
   StudentCreate,
   StudentEdit,
+  Classroom,
+  ClassroomCreate,
+  ClassroomEdit,
 };

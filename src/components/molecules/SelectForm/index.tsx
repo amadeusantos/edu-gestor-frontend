@@ -25,6 +25,7 @@ export function SelectForm({
         size="large"
         filterOption={false}
         mode={mode}
+        onSelect={onSearch ? () => onSearch(""): undefined}
         showSearch={!!onSearch}
         onSearch={onSearch}
         disabled={disabled}

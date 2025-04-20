@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   studentsPagination,
   createStudent,
@@ -13,6 +13,7 @@ export function useListStudents(page: number, size: number, search?: string) {
   return useQuery({
     queryKey: ["students", page, size, search],
     queryFn: () => studentsPagination(search, page, size),
+    placeholderData: keepPreviousData,
   });
 }
 

@@ -12,6 +12,9 @@ import {
   Student,
   StudentCreate,
   StudentEdit,
+  Classroom,
+  ClassroomCreate,
+  ClassroomEdit,
 } from "../components/pages";
 import { RedirectRouter } from "./RedirectRouter";
 
@@ -34,6 +37,9 @@ export function AppRoutes() {
           <Route path="/students" element={<Student />} />
           <Route path="/students/new" element={<StudentCreate />} />
           <Route path="/students/:id" element={<StudentEdit />} />
+          <Route path="/classrooms" element={<Classroom />} />
+          <Route path="/classrooms/new" element={<ClassroomCreate />} />
+          <Route path="/classrooms/:id" element={<ClassroomEdit />} />
         </Route>
         <Route
           element={
