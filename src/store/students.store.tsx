@@ -1,4 +1,9 @@
-import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import {
   studentsPagination,
   createStudent,
@@ -8,6 +13,8 @@ import {
   StudentUpdateSchema,
 } from "../services/student.service";
 import { UseMutateProps } from "./interfaces";
+import { ApiError } from "../services/api";
+import { messages } from "./message";
 
 export function useListStudents(page: number, size: number, search?: string) {
   return useQuery({
@@ -24,7 +31,11 @@ export function useFindStudent(id: string) {
   });
 }
 
-export function useCreateStudent({ onSuccess, onError }: UseMutateProps = {}) {
+export function useCreateStudent({
+  onSuccess,
+  onError,
+  notification,
+}: UseMutateProps = {}) {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: createStudent,
@@ -35,13 +46,28 @@ export function useCreateStudent({ onSuccess, onError }: UseMutateProps = {}) {
       }
       // message.success('Atualizado com sucesso')
     },
-    onError,
+    onError: (error) => {
+      if (error instanceof ApiError) {
+        if (notification) {
+          notification.error({
+            message: "Error ao criar o aluno",
+            description:
+              error.error_code && messages[error.error_code]
+                ? messages[error.error_code]
+                : "Erro desconhecido!",
+          });
+        }
+      }
+      if (onError) {
+        onError();
+      }
+    },
   });
 }
 
 export function useEditStudent(
   id: string,
-  { onSuccess, onError }: UseMutateProps = {}
+  { onSuccess, onError, notification }: UseMutateProps = {}
 ) {
   const queryClient = useQueryClient();
   return useMutation({
@@ -53,7 +79,22 @@ export function useEditStudent(
       }
       // message.success('Atualizado com sucesso')
     },
-    onError,
+    onError: (error) => {
+      if (error instanceof ApiError) {
+        if (notification) {
+          notification.error({
+            message: "Error ao editar o aluno",
+            description:
+              error.error_code && messages[error.error_code]
+                ? messages[error.error_code]
+                : "Erro desconhecido!",
+          });
+        }
+      }
+      if (onError) {
+        onError();
+      }
+    },
   });
 }
 

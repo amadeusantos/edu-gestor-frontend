@@ -1,4 +1,4 @@
-import { Button, Form } from "antd";
+import { Button, Form, notification } from "antd";
 import { SelectForm } from "../../molecules/SelectForm";
 import { SideBarTemplate } from "../../templates/SideBarTemplate";
 import { useEditStudent, useFindStudent } from "../../../store/students.store";
@@ -16,8 +16,10 @@ export function StudentEdit() {
   const { id } = useParams();
   const navigator = useNavigate();
   const { data, isLoading, isError } = useFindStudent(id!);
+  const [api, contextHolder] = notification.useNotification();
   const { mutate } = useEditStudent(id!, {
     onSuccess: () => navigator("/students"),
+    notification: api,
   });
   const onFinish = (values: StudentUpdateSchema) => {
     mutate(values);
@@ -33,6 +35,7 @@ export function StudentEdit() {
   return (
     <SideBarTemplate>
       <S.FormContainer>
+        {contextHolder}
         <Title>Edição de Aluno</Title>
         <Form
           layout="vertical"
