@@ -5,7 +5,7 @@ import { SideBarTemplate } from "../../templates/SideBarTemplate";
 import { Title } from "../../ions";
 import * as S from "./style";
 import { InputForm } from "../../molecules/InputForm";
-import { Button, Form } from "antd";
+import { Button, Form, notification } from "antd";
 import { SelectForm } from "../../molecules/SelectForm";
 import { useListProfessors } from "../../../store/professors.store";
 import { useListStudents } from "../../../store/students.store";
@@ -29,10 +29,12 @@ export function UserCreate() {
   );
   const { data: professors } = useListProfessors(1, 5, searchProfessor);
   const { data: students } = useListStudents(1, 5, searchStudent);
+  const [api, contextHolder] = notification.useNotification();
   const { mutate } = useCreateUser({
     onSuccess() {
       navigator("/users");
     },
+    notification: api,
   });
   const [form] = Form.useForm();
   const roleValue: KeyRoleEnum = Form.useWatch("role", form);
@@ -109,6 +111,7 @@ export function UserCreate() {
   return (
     <SideBarTemplate>
       <S.Container>
+        {contextHolder}
         <Title>Cadastro de Usuário</Title>
         <Form layout="vertical" form={form} onFinish={onFinish}>
           <S.Row>

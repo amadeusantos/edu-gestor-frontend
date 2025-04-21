@@ -5,7 +5,7 @@ import { SideBarTemplate } from "../../templates/SideBarTemplate";
 import { Title } from "../../ions";
 import * as S from "./style";
 import { InputForm } from "../../molecules/InputForm";
-import { Button, Form } from "antd";
+import { Button, Form, notification } from "antd";
 import { SelectForm } from "../../molecules/SelectForm";
 import { Loading } from "../../molecules/Loading";
 import { useState } from "react";
@@ -32,10 +32,12 @@ export function UserUpdate() {
   const { data: students } = useListStudents(1, 5, searchStudent);
   const { data, isLoading } = useFindUser(id!);
   const navigator = useNavigate();
+  const [api, contextHolder] = notification.useNotification();
   const { mutate } = useEditUser(id!, {
     onSuccess() {
       navigator("/users");
     },
+    notification: api,
   });
 
   const [form] = Form.useForm();
@@ -117,6 +119,7 @@ export function UserUpdate() {
   return (
     <SideBarTemplate>
       <S.Container>
+        {contextHolder}
         <Title>Edição de Usuário</Title>
         <Form layout="vertical" form={form} initialValues={data} onFinish={onFinish}>
           <S.Row>

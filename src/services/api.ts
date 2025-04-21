@@ -18,8 +18,23 @@ api.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       Cookies.remove("token");
     }
+    throw new ApiError(
+      error.response.data.message,
+      error.response.status,
+      error.response.data.error_code
+    );
   }
 );
+
+export class ApiError extends Error {
+  status_code: number | undefined;
+  error_code: number | undefined;
+  constructor(message?: string, status_code?: number, error_code?: number) {
+    super(message);
+    this.status_code = status_code;
+    this.error_code = error_code;
+  }
+}
 
 export const request = {
   get: async <R = unknown>(uri: string) => {
