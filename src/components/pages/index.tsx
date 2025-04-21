@@ -13,6 +13,7 @@ import { ClassroomCreate } from "./ClassroomCreate";
 import { ClassroomEdit } from "./ClassroomEdit";
 import { Discipline } from "./Discipline";
 import { DisciplineCreate } from "./DisciplineCreate";
+import { DisciplineEdit } from "./DisciplineEdit";
 
 export {
   Login,
@@ -30,4 +31,5 @@ export {
   ClassroomEdit,
   Discipline,
   DisciplineCreate,
+  DisciplineEdit,
 };
