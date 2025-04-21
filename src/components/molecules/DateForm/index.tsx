@@ -7,15 +7,22 @@ interface DateFormProps {
   name?: string;
   rules?: Rule[];
   minDate?: dayjs.Dayjs;
+  maxDate?: dayjs.Dayjs;
   disabled?: boolean;
 }
 
-export function DateForm({ minDate, disabled, ...props }: DateFormProps) {
+export function DateForm({
+  minDate,
+  maxDate,
+  disabled,
+  ...props
+}: DateFormProps) {
   return (
     <S.Container {...props}>
       <S.Content
         size="large"
         minDate={minDate}
+        maxDate={maxDate}
         format="DD/MM/YYYY"
         disabled={disabled}
       />

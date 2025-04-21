@@ -18,6 +18,8 @@ import {
   Discipline,
   DisciplineCreate,
   DisciplineEdit,
+  Frequency,
+  FrequencyCreate,
 } from "../components/pages";
 import { RedirectRouter } from "./RedirectRouter";
 
@@ -43,9 +45,24 @@ export function AppRoutes() {
           <Route path="/classrooms" element={<Classroom />} />
           <Route path="/classrooms/new" element={<ClassroomCreate />} />
           <Route path="/classrooms/:id" element={<ClassroomEdit />} />
-          <Route path="/disciplines" element={<Discipline />} />
           <Route path="/disciplines/new" element={<DisciplineCreate />} />
           <Route path="/disciplines/:id" element={<DisciplineEdit />} />
+        </Route>
+        <Route
+          element={
+            <PrivateRouter roles={["ADMIN", "COORDINATOR", "PROFESSOR"]} />
+          }
+        >
+          <Route path="/disciplines" element={<Discipline />} />
+          <Route path="/disciplines/new" element={<DisciplineCreate />} />
+          <Route
+            path="/disciplines/:disciplineId/frequencies"
+            element={<Frequency />}
+          />
+          <Route
+            path="/disciplines/:disciplineId/frequencies/new/:classroomId"
+            element={<FrequencyCreate />}
+          />
         </Route>
         <Route
           element={

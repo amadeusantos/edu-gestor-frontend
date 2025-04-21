@@ -122,6 +122,7 @@ export function User() {
             columns={columns}
             dataSource={data ? data.results : []}
             loading={isLoading}
+            scroll={{ y: "65vh" }}
           />
           {contextHolder}
         </Content>

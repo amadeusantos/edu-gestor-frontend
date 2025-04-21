@@ -1,5 +1,6 @@
 import {
   Button,
+  Dropdown,
   Input,
   Layout,
   Modal,
@@ -17,15 +18,96 @@ import {
   useListDisciplines,
 } from "../../../store/disciplines.store";
 import { useState } from "react";
-import { Pencil, Trash } from "phosphor-react";
+import {
+  DotsThreeVertical,
+  Notebook,
+  PencilSimpleLine,
+  Trash,
+} from "phosphor-react";
+import { KeyRoleEnum } from "../../../services/users.service";
+import { useUser } from "../../../store/auth.store";
 
 const config = {
   title: "Remover Disciplina",
   content: "Deseja remover esse disciplina?",
 };
 
+const itemsDropdown = (
+  role: KeyRoleEnum,
+  record: DisciplineSchema,
+  openModalDelete: (id: string) => void
+) => {
+  return ["ADMIN", "COORDINATOR"].includes(role)
+    ? [
+        {
+          key: 1,
+          icon: <PencilSimpleLine size={16} />,
+          label: (
+            <Link to={{ pathname: `/disciplines/${record.id}` }}>
+              Editar Disciplina
+            </Link>
+          ),
+        },
+        {
+          key: 3,
+          icon: <Notebook size={16} />,
+          label: (
+            <Link to={{ pathname: `/disciplines/${record.id}/frequencies` }}>
+              Ver Frequência
+            </Link>
+          ),
+        },
+        {
+          key: 4,
+          icon: <Notebook size={16} />,
+          label: (
+            <Link
+              to={{
+                pathname: `/disciplines/${record.id}/frequencies/new/${record.classroom_id}`,
+              }}
+            >
+              Adicionar Frequência
+            </Link>
+          ),
+        },
+        {
+          key: 2,
+          icon: <Trash size={16} />,
+          label: "Remover Disciplina",
+          onClick: () => {
+            openModalDelete(record.id);
+          },
+        },
+      ]
+    : [
+        {
+          key: 3,
+          icon: <Notebook size={16} />,
+          label: (
+            <Link to={{ pathname: `/disciplines/${record.id}/frequencies` }}>
+              Ver Frequência
+            </Link>
+          ),
+        },
+        {
+          key: 4,
+          icon: <Notebook size={16} />,
+          label: (
+            <Link
+              to={{
+                pathname: `/disciplines/${record.id}/frequencies/new/${record.classroom_id}`,
+              }}
+            >
+              Adicionar Frequência
+            </Link>
+          ),
+        },
+      ];
+};
+
 export function Discipline() {
   const [page, setPage] = useState(1);
+  const { data: user } = useUser();
   const [search, setSearch] = useState<string | undefined>(undefined);
   const { data, isLoading } = useListDisciplines(page, 10, search);
   const { mutate: deleteDiscipline } = useDeleteDiscipline();
@@ -71,22 +153,13 @@ export function Discipline() {
     {
       title: "Ações",
       render: (_, record) => (
-        <div style={{ display: "flex", gap: "1em" }}>
-          <Link to={{ pathname: `/disciplines/${record.id}` }}>
-            <Button color="primary" variant="solid">
-              <Pencil size={28} />
-            </Button>
-          </Link>
-          <Button
-            color="danger"
-            variant="solid"
-            onClick={() => {
-              openModalDelete(record.id);
-            }}
-          >
-            <Trash size={28} />
-          </Button>
-        </div>
+        <Dropdown
+          menu={{ items: itemsDropdown(user!.role, record, openModalDelete) }}
+        >
+          <a>
+            <DotsThreeVertical size={24} weight="bold" />
+          </a>
+        </Dropdown>
       ),
     },
   ];
@@ -106,7 +179,7 @@ export function Discipline() {
           </div>
           <Link to="/disciplines/new">
             <Button type="primary" size="large">
-              Adicionar Turma
+              Adicionar Disciplina
             </Button>
           </Link>
         </div>

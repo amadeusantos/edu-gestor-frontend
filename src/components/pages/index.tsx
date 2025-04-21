@@ -14,6 +14,8 @@ import { ClassroomEdit } from "./ClassroomEdit";
 import { Discipline } from "./Discipline";
 import { DisciplineCreate } from "./DisciplineCreate";
 import { DisciplineEdit } from "./DisciplineEdit";
+import { Frequency } from "./Frequency";
+import { FrequencyCreate } from "./FrequencyCreate";
 
 export {
   Login,
@@ -32,4 +34,6 @@ export {
   Discipline,
   DisciplineCreate,
   DisciplineEdit,
+  Frequency,
+  FrequencyCreate
 };

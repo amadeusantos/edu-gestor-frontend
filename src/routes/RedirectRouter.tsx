@@ -4,10 +4,10 @@ import { useUser } from "../store/auth.store";
 
 const routers = {
   STUDENT: "/build",
-  PROFESSOR: "/build",
-  COORDINATOR: "/build",
+  PROFESSOR: "/disciplines",
+  COORDINATOR: "/students",
   ADMIN: "/users",
-  RESPONSIBLE: "/professors",
+  RESPONSIBLE: "/build",
 };
 
 export function RedirectRouter() {

@@ -29,3 +29,10 @@ export interface ProfessorMinimalSchema {
   fullname: string;
   sex: SexEnum;
 }
+
+export interface DisciplineMinimalSchema {
+  id: string;
+  name: string;
+  classroom_id: string;
+  professor_id?: string;
+}
