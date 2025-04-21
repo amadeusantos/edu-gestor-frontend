@@ -13,6 +13,8 @@ import {
   updateProfessor,
 } from "../services/professors.service";
 import { UseMutateProps } from "./interfaces";
+import { ApiError } from "../services/api";
+import { messages } from "./message";
 
 export function useListProfessors(page: number, size: number, search?: string) {
   return useQuery({
@@ -32,6 +34,7 @@ export function useFindProfessor(id: string) {
 export function useCreateProfessor({
   onSuccess,
   onError,
+  notification,
 }: UseMutateProps = {}) {
   const queryClient = useQueryClient();
   return useMutation({
@@ -43,13 +46,28 @@ export function useCreateProfessor({
       }
       // message.success('Atualizado com sucesso')
     },
-    onError,
+    onError: (error) => {
+      if (error instanceof ApiError) {
+        if (notification) {
+          notification.error({
+            message: "Error ao criar o professor",
+            description:
+              error.error_code && messages[error.error_code]
+                ? messages[error.error_code]
+                : "Erro desconhecido!",
+          });
+        }
+      }
+      if (onError) {
+        onError();
+      }
+    },
   });
 }
 
 export function useEditProfessor(
   id: string,
-  { onSuccess, onError }: UseMutateProps = {}
+  { onSuccess, onError, notification }: UseMutateProps = {}
 ) {
   const queryClient = useQueryClient();
   return useMutation({
@@ -62,7 +80,22 @@ export function useEditProfessor(
         onSuccess();
       }
     },
-    onError,
+    onError: (error) => {
+      if (error instanceof ApiError) {
+        if (notification) {
+          notification.error({
+            message: "Error ao editar o professor",
+            description:
+              error.error_code && messages[error.error_code]
+                ? messages[error.error_code]
+                : "Erro desconhecido!",
+          });
+        }
+      }
+      if (onError) {
+        onError();
+      }
+    },
   });
 }
 

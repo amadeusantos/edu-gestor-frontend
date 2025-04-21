@@ -1,4 +1,4 @@
-import { Button, Form } from "antd";
+import { Button, Form, notification } from "antd";
 import { Title } from "../../ions";
 import { SideBarTemplate } from "../../templates/SideBarTemplate";
 import * as S from "./style";
@@ -19,10 +19,12 @@ export function ProfessorUpdate() {
   const { id } = useParams();
   const { data, isLoading } = useFindProfessor(id!);
   const navigator = useNavigate();
+  const [api, contextHolder] = notification.useNotification();
   const { mutate } = useEditProfessor(id!, {
     onSuccess() {
       navigator("/professors");
     },
+    notification: api,
   });
 
   const onFinish = (values: ProfessorUpdateSchema) => {
@@ -37,6 +39,7 @@ export function ProfessorUpdate() {
   return (
     <SideBarTemplate>
       <S.Container>
+        {contextHolder}
         <Title>Edição de Professor</Title>
         <Form
           layout="vertical"

@@ -1,4 +1,4 @@
-import { Button, Form } from "antd";
+import { Button, Form, notification } from "antd";
 import { useCreateProfessor } from "../../../store/professors.store";
 import { SideBarTemplate } from "../../templates/SideBarTemplate";
 import { InputForm } from "../../molecules/InputForm";
@@ -12,13 +12,18 @@ import { validate as validateCPF } from "validation-br/dist/cpf";
 
 export function ProfessorCreate() {
   const navigator = useNavigate();
-  const { mutate } = useCreateProfessor({onSuccess: () => navigator("/professors")});
+  const [api, contextHolder] = notification.useNotification();
+  const { mutate } = useCreateProfessor({
+    onSuccess: () => navigator("/professors"),
+    notification: api,
+  });
   const onFinish = (values: ProfessorCreateSchema) => {
     mutate(values);
   };
   return (
     <SideBarTemplate>
       <S.Container>
+        {contextHolder}
         <Title>Cadastro de Professor</Title>
         <Form layout="vertical" onFinish={onFinish}>
           <S.Row>
@@ -90,12 +95,17 @@ export function ProfessorCreate() {
                 value = value.replace(/\D/g, "");
                 value = value.slice(0, 11);
                 if (value.length == 10) {
-                  return `(${value.slice(0, 2)}) ${value.slice(2, 6)}-${value.slice(6, 11)}`;
+                  return `(${value.slice(0, 2)}) ${value.slice(
+                    2,
+                    6
+                  )}-${value.slice(6, 11)}`;
                 }
                 if (value.length == 11) {
-                  return `(${value.slice(0, 2)}) ${value.slice(2, 7)}-${value.slice(7, 12)}`;
+                  return `(${value.slice(0, 2)}) ${value.slice(
+                    2,
+                    7
+                  )}-${value.slice(7, 12)}`;
                 }
-
 
                 return value;
               }}
