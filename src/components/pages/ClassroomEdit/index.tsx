@@ -80,7 +80,7 @@ export function ClassroomEdit() {
               <Button>Cancelar</Button>
             </Link>
             <Button htmlType="submit" type="primary">
-              Cadastrar
+              Editar
             </Button>
           </S.ContainerButtons>
         </Form>

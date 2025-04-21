@@ -14,7 +14,7 @@ import { Pencil, Trash } from "phosphor-react";
 
 const config = {
   title: "Remover Turma",
-  content: "Deseja remover esse Turma?",
+  content: "Deseja remover esse turma?",
 };
 
 const Shifts = {

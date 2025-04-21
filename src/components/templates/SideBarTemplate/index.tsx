@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import type { MenuProps } from "antd";
 import { Button, Layout, Menu } from "antd";
-import { Chalkboard, SignOut, Student, User, Users } from "phosphor-react";
+import {
+  Books,
+  Chalkboard,
+  SignOut,
+  Student,
+  User,
+  Users,
+} from "phosphor-react";
 import { Link, useLocation } from "react-router";
 import { useLogout } from "../../../store/auth.store";
 
@@ -62,8 +69,13 @@ export function SideBarTemplate({ children }: SideBarTemplateProps) {
         <Chalkboard />
       </Link>
     ),
-    // getItem("Cursos", "4", <Star />),
-    // getItem("Disciplinas", "6", <Star />),
+    getItem(
+      "Disciplinas",
+      "disciplines",
+      <Link to={{ pathname: "/disciplines" }}>
+        <Books />
+      </Link>
+    ),
     getItem(
       "",
       "",
@@ -87,7 +99,7 @@ export function SideBarTemplate({ children }: SideBarTemplateProps) {
           items={items}
         />
       </Sider>
-      {children}
+      <Layout>{children}</Layout>
     </Layout>
   );
 }
