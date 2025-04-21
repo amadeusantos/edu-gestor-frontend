@@ -63,7 +63,7 @@ export function FrequencyCreate() {
             }}
             rowKey="id"
             size="large"
-            pagination={{}}
+            pagination={false}
             columns={[{ title: "Nome", dataIndex: "fullname" }]}
             dataSource={classroom ? classroom.students : []}
             style={{ padding: "2em" }}
