@@ -177,11 +177,13 @@ export function Discipline() {
               size="large"
             />
           </div>
-          <Link to="/disciplines/new">
-            <Button type="primary" size="large">
-              Adicionar Disciplina
-            </Button>
-          </Link>
+          {user?.role != "PROFESSOR" && (
+            <Link to="/disciplines/new">
+              <Button type="primary" size="large">
+                Adicionar Disciplina
+              </Button>
+            </Link>
+          )}
         </div>
 
         <Content>
@@ -201,6 +203,7 @@ export function Discipline() {
             dataSource={data ? data.results : []}
             style={{ padding: "2em" }}
             loading={isLoading}
+            scroll={{ y: "65vh" }}
           />
           {contextHolder}
         </Content>

@@ -1,5 +1,6 @@
 import {
   Button,
+  Dropdown,
   Input,
   Layout,
   Modal,
@@ -8,7 +9,7 @@ import {
   Tag,
 } from "antd";
 import { Content } from "antd/es/layout/layout";
-import { Pencil, Trash } from "phosphor-react";
+import { DotsThreeVertical, PencilSimpleLine, Trash } from "phosphor-react";
 import { Link } from "react-router";
 import { StudentSchema } from "../../../services/student.service";
 import { useState } from "react";
@@ -23,6 +24,27 @@ const config = {
   title: "Remover Aluno",
   content: "Deseja remover esse aluno?",
 };
+
+const itemsDropdown = (
+  record: StudentSchema,
+  openModalDelete: (id: string) => void
+) => [
+  {
+    key: 1,
+    icon: <PencilSimpleLine size={16} />,
+    label: (
+      <Link to={{ pathname: `/students/${record.id}` }}>Editar Aluno</Link>
+    ),
+  },
+  {
+    key: 2,
+    icon: <Trash size={16} />,
+    label: "Remover Aluno",
+    onClick: () => {
+      openModalDelete(record.id);
+    },
+  },
+];
 
 export function Student() {
   const [page, setPage] = useState(1);
@@ -55,7 +77,9 @@ export function Student() {
       title: "Turma",
       dataIndex: "classroom",
       render: (value) => (
-        <Tag color={value ? "blue" : "red"}>{value ? value.name : "Sem Turma"}</Tag>
+        <Tag color={value ? "blue" : "red"}>
+          {value ? value.name : "Sem Turma"}
+        </Tag>
       ),
     },
     {
@@ -70,22 +94,11 @@ export function Student() {
     {
       title: "Ações",
       render: (_, record) => (
-        <div style={{ display: "flex", gap: "1em" }}>
-          <Link to={{ pathname: `/students/${record.id}` }}>
-            <Button color="primary" variant="solid">
-              <Pencil size={28} />
-            </Button>
-          </Link>
-          <Button
-            color="danger"
-            variant="solid"
-            onClick={() => {
-              openModalDelete(record.id);
-            }}
-          >
-            <Trash size={28} />
-          </Button>
-        </div>
+        <Dropdown menu={{ items: itemsDropdown(record, openModalDelete) }}>
+          <a>
+            <DotsThreeVertical size={24} weight="bold" />
+          </a>
+        </Dropdown>
       ),
     },
   ];
@@ -128,6 +141,7 @@ export function Student() {
             dataSource={data?.results}
             style={{ padding: "2em" }}
             loading={isLoading}
+            scroll={{ y: "65vh" }}
           />
           {contextHolder}
         </Content>

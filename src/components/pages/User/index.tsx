@@ -1,6 +1,10 @@
-import { Button, Input, Modal, TableColumnsType, Tag } from "antd";
+import { Button, Dropdown, Input, Modal, TableColumnsType, Tag } from "antd";
 import { Content } from "antd/es/layout/layout";
-import { Pencil, Trash } from "phosphor-react";
+import {
+  DotsThreeVertical,
+  PencilSimpleLine,
+  Trash,
+} from "phosphor-react";
 import { Link } from "react-router";
 import { Title } from "../../ions";
 import { useListUsers, useUpdateEnabledUser } from "../../../store/users.store";
@@ -12,6 +16,35 @@ import {
 } from "../../../services/users.service";
 import { SideBarTemplate } from "../../templates/SideBarTemplate";
 import * as S from "./style";
+
+const renderFullname = (value: KeyRoleEnum, record: UserSchema) => {
+  if (value === "PROFESSOR" && record.professor) {
+    return record.professor.fullname;
+  }
+
+  if ((value === "STUDENT" || value === "RESPONSIBLE") && record.student) {
+    return record.student.fullname;
+  }
+};
+
+const itemsDropdown = (
+  record: UserSchema,
+  openModalDelete: (id: string, b: boolean) => void
+) => [
+  {
+    key: 1,
+    icon: <PencilSimpleLine size={16} />,
+    label: <Link to={{ pathname: `/users/${record.id}` }}>Editar Usuário</Link>,
+  },
+  {
+    key: 2,
+    icon: <Trash size={16} />,
+    label: record.enabled ? "Desativar Usuário" : "Ativar Usuário",
+    onClick: () => {
+      openModalDelete(record.id, record.enabled);
+    },
+  },
+];
 
 export function User() {
   const [page, setPage] = useState(1);
@@ -52,6 +85,8 @@ export function User() {
     },
     {
       title: "Associado",
+      dataIndex: "role",
+      render: renderFullname,
     },
     {
       title: "Status",
@@ -65,22 +100,11 @@ export function User() {
     {
       title: "Ações",
       render: (_, record) => (
-        <div style={{ display: "flex", gap: "1em" }}>
-          <Link to={{ pathname: `/users/${record.id}` }}>
-            <Button color="primary" variant="solid">
-              <Pencil size={28} />
-            </Button>
-          </Link>
-          <Button
-            color="danger"
-            variant="solid"
-            onClick={() => {
-              openModalUpdate(record.id, record.enabled);
-            }}
-          >
-            <Trash size={28} />
-          </Button>
-        </div>
+        <Dropdown menu={{ items: itemsDropdown(record, openModalUpdate) }}>
+          <a>
+            <DotsThreeVertical size={24} weight="bold" />
+          </a>
+        </Dropdown>
       ),
     },
   ];

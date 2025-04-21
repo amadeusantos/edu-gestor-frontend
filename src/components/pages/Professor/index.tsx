@@ -1,5 +1,6 @@
 import {
   Button,
+  Dropdown,
   Input,
   Layout,
   Modal,
@@ -9,7 +10,7 @@ import {
 } from "antd";
 import { SideBarTemplate } from "../../templates/SideBarTemplate";
 import { Content } from "antd/es/layout/layout";
-import { Pencil, Trash } from "phosphor-react";
+import { DotsThreeVertical, PencilSimpleLine, Trash } from "phosphor-react";
 import { ProfessorSchema } from "../../../services/professors.service";
 import { Link } from "react-router";
 import {
@@ -23,6 +24,27 @@ const config = {
   title: "Remover Professor",
   content: "Deseja remover esse professor?",
 };
+
+const itemsDropdown = (
+  record: ProfessorSchema,
+  openModalDelete: (id: string) => void
+) => [
+  {
+    key: 1,
+    icon: <PencilSimpleLine size={16} />,
+    label: (
+      <Link to={{ pathname: `/professors/${record.id}` }}>Editar Professor</Link>
+    ),
+  },
+  {
+    key: 2,
+    icon: <Trash size={16} />,
+    label: "Remover Professor",
+    onClick: () => {
+      openModalDelete(record.id);
+    },
+  },
+];
 
 export function Professor() {
   const [page, setPage] = useState(1);
@@ -63,22 +85,11 @@ export function Professor() {
     {
       title: "Ações",
       render: (_, record) => (
-        <div style={{ display: "flex", gap: "1em" }}>
-          <Link to={{ pathname: `/professors/${record.id}` }}>
-            <Button color="primary" variant="solid">
-              <Pencil size={28} />
-            </Button>
-          </Link>
-          <Button
-            color="danger"
-            variant="solid"
-            onClick={() => {
-              openModalDelete(record.id);
-            }}
-          >
-            <Trash size={28} />
-          </Button>
-        </div>
+        <Dropdown menu={{ items: itemsDropdown(record, openModalDelete) }}>
+          <a>
+            <DotsThreeVertical size={24} weight="bold" />
+          </a>
+        </Dropdown>
       ),
     },
   ];
@@ -121,6 +132,7 @@ export function Professor() {
             dataSource={data ? data.results : []}
             loading={isLoading}
             style={{ padding: "2em" }}
+            scroll={{ y: "65vh" }}
           />
           {contextHolder}
         </Content>

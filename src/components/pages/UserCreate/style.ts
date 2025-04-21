@@ -1,12 +1,9 @@
 import { styled } from "@linaria/react";
-import { Form } from "antd";
 
 export const Container = styled.div`
   flex: 1;
   padding: 2rem;
 `;
-
-export const Content = styled(Form)``;
 
 export const Row = styled.div`
   display: grid;

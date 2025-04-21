@@ -1,12 +1,16 @@
 import { request } from "./api";
-import { PaginationSchema } from "./type";
+import {
+  PaginationSchema,
+  ProfessorMinimalSchema,
+  StudentMinimalSchema,
+} from "./type";
 
 export const RoleEnum = {
   STUDENT: "Aluno",
   PROFESSOR: "Professor",
   COORDINATOR: "Coordenador",
   ADMIN: "Administrador",
-  RESPONSIBLE: "Responsável"
+  RESPONSIBLE: "Responsável",
 };
 
 export type KeyRoleEnum = keyof typeof RoleEnum;
@@ -16,6 +20,8 @@ export interface UserSchema {
   email: string;
   role: KeyRoleEnum;
   enabled: boolean;
+  student?: StudentMinimalSchema;
+  professor?: ProfessorMinimalSchema;
 }
 
 export interface UserCreateSchema {
@@ -29,7 +35,6 @@ export interface UserUpdateSchema {
   role: KeyRoleEnum;
   password?: string;
 }
-
 
 export async function usersPagination(
   search?: string,
@@ -53,11 +58,11 @@ export async function getUserByEmail(email: string) {
 }
 
 export async function createUser(user: UserCreateSchema) {
-    await request.post("/users", user)
+  await request.post("/users", user);
 }
 
 export async function updateUser(id: string, user: UserUpdateSchema) {
-    await request.put(`/users/${id}`, user)
+  await request.put(`/users/${id}`, user);
 }
 
 export async function updateEnabledUser(id: string, enabled: boolean) {

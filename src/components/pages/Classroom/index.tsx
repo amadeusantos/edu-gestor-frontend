@@ -4,13 +4,25 @@ import {
   useListClassrooms,
 } from "../../../store/classrooms.store";
 import { SideBarTemplate } from "../../templates/SideBarTemplate";
-import { Button, Input, Layout, Modal, Table, TableColumnsType } from "antd";
+import {
+  Button,
+  Dropdown,
+  Input,
+  Layout,
+  Modal,
+  Table,
+  TableColumnsType,
+} from "antd";
 import { Content } from "antd/es/layout/layout";
 import { ClassroomSchema } from "../../../services/classrooms.service";
 import { Title } from "../../ions";
 import { Link } from "react-router";
 import { ShiftEnum } from "../../../services/type";
-import { Pencil, Trash } from "phosphor-react";
+import {
+  DotsThreeVertical,
+  PencilSimpleLine,
+  Trash,
+} from "phosphor-react";
 
 const config = {
   title: "Remover Turma",
@@ -22,6 +34,27 @@ const Shifts = {
   AFTERNOON: "Tarde",
   NIGHT: "Noite",
 };
+
+const itemsDropdown = (
+  record: ClassroomSchema,
+  openModalDelete: (id: string) => void
+) => [
+  {
+    key: 1,
+    icon: <PencilSimpleLine size={16} />,
+    label: (
+      <Link to={{ pathname: `/classrooms/${record.id}` }}>Editar Turma</Link>
+    ),
+  },
+  {
+    key: 2,
+    icon: <Trash size={16} />,
+    label: "Remover Turma",
+    onClick: () => {
+      openModalDelete(record.id);
+    },
+  },
+];
 
 export function Classroom() {
   const [page, setPage] = useState(1);
@@ -57,22 +90,11 @@ export function Classroom() {
     {
       title: "Ações",
       render: (_, record) => (
-        <div style={{ display: "flex", gap: "1em" }}>
-          <Link to={{ pathname: `/classrooms/${record.id}` }}>
-            <Button color="primary" variant="solid">
-              <Pencil size={28} />
-            </Button>
-          </Link>
-          <Button
-            color="danger"
-            variant="solid"
-            onClick={() => {
-              openModalDelete(record.id);
-            }}
-          >
-            <Trash size={28} />
-          </Button>
-        </div>
+        <Dropdown menu={{ items: itemsDropdown(record, openModalDelete) }}>
+          <a>
+            <DotsThreeVertical size={24} weight="bold" />
+          </a>
+        </Dropdown>
       ),
     },
   ];
@@ -115,6 +137,7 @@ export function Classroom() {
             dataSource={data ? data.results : []}
             style={{ padding: "2em" }}
             loading={isLoading}
+            scroll={{ y: "65vh" }}
           />
           {contextHolder}
         </Content>

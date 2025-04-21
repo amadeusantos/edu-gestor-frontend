@@ -51,7 +51,17 @@ export function Frequency() {
     <SideBarTemplate>
       <Layout style={{ padding: "1rem" }}>
         <Title>Frequências de {discipline?.name}</Title>
-        <div style={{ display: "flex", gap: "1rem", justifyContent: "end" }}>
+        <div
+          style={{
+            display: "flex",
+            paddingTop: "1rem",
+            gap: "1rem",
+            justifyContent: "space-between",
+          }}
+        >
+          <Link to={`/disciplines`}>
+            <Button size="large">Voltar</Button>
+          </Link>
           <Link
             to={`/disciplines/${disciplineId}/frequencies/new/${discipline?.classroom_id}`}
           >

@@ -10,7 +10,7 @@ import {
   Users,
 } from "phosphor-react";
 import { Link, useLocation } from "react-router";
-import { useLogout } from "../../../store/auth.store";
+import { useLogout, useUser } from "../../../store/auth.store";
 
 const { Sider } = Layout;
 
@@ -36,6 +36,7 @@ interface SideBarTemplateProps {
 
 export function SideBarTemplate({ children }: SideBarTemplateProps) {
   const { mutate: logout } = useLogout();
+  const { data: user } = useUser();
   const { pathname } = useLocation();
   const select = pathname.split("/")[1];
   const [collapsed, setCollapsed] = useState(false);
@@ -84,6 +85,17 @@ export function SideBarTemplate({ children }: SideBarTemplateProps) {
       </Button>
     ),
   ];
+
+  if (user?.role == "COORDINATOR") {
+    items.shift();
+  }
+
+  if (user?.role == "PROFESSOR") {
+    items.shift();
+    items.shift();
+    items.shift();
+    items.shift();
+  }
 
   return (
     <Layout hasSider style={{ minHeight: "100vh", width: "100vw" }}>
