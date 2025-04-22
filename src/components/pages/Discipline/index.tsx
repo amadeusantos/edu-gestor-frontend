@@ -142,6 +142,11 @@ export function Discipline() {
       ),
     },
     {
+      title: "Turma",
+      dataIndex: "classroom",
+      render: (value) => <Tag color={"cyan"}>{value.name}</Tag>,
+    },
+    {
       title: "Status",
       dataIndex: "archived",
       render: (value) => (

@@ -19,6 +19,7 @@ import {
 } from "../../../store/professors.store";
 import { Title } from "../../ions";
 import { useState } from "react";
+import { DisciplineMinimalSchema } from "../../../services/type";
 
 const config = {
   title: "Remover Professor",
@@ -33,7 +34,9 @@ const itemsDropdown = (
     key: 1,
     icon: <PencilSimpleLine size={16} />,
     label: (
-      <Link to={{ pathname: `/professors/${record.id}` }}>Editar Professor</Link>
+      <Link to={{ pathname: `/professors/${record.id}` }}>
+        Editar Professor
+      </Link>
     ),
   },
   {
@@ -72,7 +75,11 @@ export function Professor() {
 
   const columns: TableColumnsType<ProfessorSchema> = [
     { title: "Nome", dataIndex: "fullname" },
-    { title: "Disciplinas", dataIndex: "disciplines" },
+    {
+      title: "Número de Disciplinas",
+      dataIndex: "disciplines",
+      render: (value: DisciplineMinimalSchema[]) => value.length,
+    },
     {
       title: "Status",
       dataIndex: "archived",
