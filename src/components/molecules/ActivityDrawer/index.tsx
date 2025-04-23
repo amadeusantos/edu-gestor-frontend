@@ -49,8 +49,6 @@ export function ActivityDrawer({
     readonly: "Visualizar Atividade",
   };
 
-  console.log({ user }, { activity });
-
   return (
     <Drawer
       footer={
