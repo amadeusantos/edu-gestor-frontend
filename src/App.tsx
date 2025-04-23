@@ -9,7 +9,7 @@ function App() {
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
-      <ConfigProvider
+      <ConfigProvider locale={{locale: "pt_br"}}
         theme={{
           token: {
             colorPrimary: "#FFA92C",

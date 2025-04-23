@@ -21,6 +21,7 @@ export function useListProfessors(page: number, size: number, search?: string) {
     queryKey: ["professors", page, size, search],
     queryFn: () => professorsPagination(search, page, size),
     placeholderData: keepPreviousData,
+    retry: false
   });
 }
 

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import type { MenuProps } from "antd";
-import { Button, Layout, Menu } from "antd";
+import { Layout, Menu } from "antd";
 import {
   Books,
+  Calendar,
   Chalkboard,
   SignOut,
   Student,
@@ -78,11 +79,11 @@ export function SideBarTemplate({ children }: SideBarTemplateProps) {
       </Link>
     ),
     getItem(
-      "",
-      "",
-      <Button type="link" onClick={() => logout()}>
-        <SignOut /> Logout
-      </Button>
+      "Agenda",
+      "agenda",
+      <Link to={{ pathname: "/agenda" }}>
+        <Calendar />
+      </Link>
     ),
   ];
 
@@ -108,7 +109,7 @@ export function SideBarTemplate({ children }: SideBarTemplateProps) {
           theme="dark"
           defaultSelectedKeys={[select]}
           mode="inline"
-          items={items}
+          items={[...items, { key: "logout", onClick: () => logout(), label: "Logout",icon: <SignOut /> }]}
         />
       </Sider>
       <Layout>{children}</Layout>

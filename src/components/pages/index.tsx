@@ -16,6 +16,9 @@ import { DisciplineCreate } from "./DisciplineCreate";
 import { DisciplineEdit } from "./DisciplineEdit";
 import { Frequency } from "./Frequency";
 import { FrequencyCreate } from "./FrequencyCreate";
+import { Agenda } from "./Agenda";
+import { AgendaCreate } from "./AgendaCreate";
+import { AgendaEdit } from "./AgendaEdit";
 
 export {
   Login,
@@ -35,5 +38,8 @@ export {
   DisciplineCreate,
   DisciplineEdit,
   Frequency,
-  FrequencyCreate
+  FrequencyCreate,
+  Agenda,
+  AgendaCreate,
+  AgendaEdit,
 };

@@ -20,6 +20,9 @@ import {
   DisciplineEdit,
   Frequency,
   FrequencyCreate,
+  Agenda,
+  AgendaCreate,
+  AgendaEdit,
 } from "../components/pages";
 import { RedirectRouter } from "./RedirectRouter";
 
@@ -63,6 +66,8 @@ export function AppRoutes() {
             path="/disciplines/:disciplineId/frequencies/new/:classroomId"
             element={<FrequencyCreate />}
           />
+          <Route path="/agenda/new" element={<AgendaCreate />} />
+          <Route path="/agenda/:id" element={<AgendaEdit />} />
         </Route>
         <Route
           element={
@@ -77,6 +82,7 @@ export function AppRoutes() {
             />
           }
         >
+          <Route path="/agenda" element={<Agenda />} />
           <Route path="/build" element={"Em construção"} />
         </Route>
         <Route path="*" element={<RedirectRouter />} />
