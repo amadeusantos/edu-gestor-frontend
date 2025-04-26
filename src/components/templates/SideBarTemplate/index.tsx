@@ -35,68 +35,74 @@ interface SideBarTemplateProps {
   children: React.ReactElement;
 }
 
+const items: MenuItem[] = [
+  getItem(
+    "Usuários",
+    "users",
+    <Link to={{ pathname: "/users" }}>
+      <Users />
+    </Link>
+  ),
+  getItem(
+    "Alunos",
+    "students",
+    <Link to={{ pathname: "/students" }}>
+      <Student />
+    </Link>
+  ),
+  getItem(
+    "Professores",
+    "professors",
+    <Link to={{ pathname: "/professors" }}>
+      <User />
+    </Link>
+  ),
+  getItem(
+    "Turmas",
+    "classrooms",
+    <Link to={{ pathname: "/classrooms" }}>
+      <Chalkboard />
+    </Link>
+  ),
+  getItem(
+    "Disciplinas",
+    "disciplines",
+    <Link to={{ pathname: "/disciplines" }}>
+      <Books />
+    </Link>
+  ),
+  getItem(
+    "Agenda",
+    "agenda",
+    <Link to={{ pathname: "/agenda" }}>
+      <Calendar />
+    </Link>
+  ),
+];
+
+const getItems = (role?: string) => {
+  switch (role) {
+    case "ADMIN":
+      return items;
+    case "COORDINATOR":
+      return items.slice(1)
+    case "PROFESSOR":
+      return items.slice(4)
+    case "STUDENT":
+      return items.slice(4)
+    case "RESPONSIBLE":
+      return items.slice(4)
+    default:
+      return []
+  }
+};
+
 export function SideBarTemplate({ children }: SideBarTemplateProps) {
   const { mutate: logout } = useLogout();
   const { data: user } = useUser();
   const { pathname } = useLocation();
   const select = pathname.split("/")[1];
   const [collapsed, setCollapsed] = useState(false);
-
-  const items: MenuItem[] = [
-    getItem(
-      "Usuários",
-      "users",
-      <Link to={{ pathname: "/users" }}>
-        <Users />
-      </Link>
-    ),
-    getItem(
-      "Alunos",
-      "students",
-      <Link to={{ pathname: "/students" }}>
-        <Student />
-      </Link>
-    ),
-    getItem(
-      "Professores",
-      "professors",
-      <Link to={{ pathname: "/professors" }}>
-        <User />
-      </Link>
-    ),
-    getItem(
-      "Turmas",
-      "classrooms",
-      <Link to={{ pathname: "/classrooms" }}>
-        <Chalkboard />
-      </Link>
-    ),
-    getItem(
-      "Disciplinas",
-      "disciplines",
-      <Link to={{ pathname: "/disciplines" }}>
-        <Books />
-      </Link>
-    ),
-    getItem(
-      "Agenda",
-      "agenda",
-      <Link to={{ pathname: "/agenda" }}>
-        <Calendar />
-      </Link>
-    ),
-  ];
-
-  if (user?.role == "COORDINATOR") {
-    items.shift();
-  }
-
-  if (user?.role == "PROFESSOR") {
-    items.shift();
-    items.shift();
-    items.shift();
-    items.shift();
-  }
 
   return (
     <Layout hasSider style={{ minHeight: "100vh", width: "100vw" }}>
@@ -109,7 +115,15 @@ export function SideBarTemplate({ children }: SideBarTemplateProps) {
           theme="dark"
           defaultSelectedKeys={[select]}
           mode="inline"
-          items={[...items, { key: "logout", onClick: () => logout(), label: "Logout",icon: <SignOut /> }]}
+          items={[
+            ...getItems(user?.role),
+            {
+              key: "logout",
+              onClick: () => logout(),
+              label: "Logout",
+              icon: <SignOut />,
+            },
+          ]}
         />
       </Sider>
       <Layout>{children}</Layout>

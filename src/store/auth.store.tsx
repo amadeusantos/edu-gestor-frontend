@@ -34,6 +34,7 @@ export function useUser() {
     queryFn: authenticated,
     refetchInterval: 1000 * 60 * 50,
     retry: false,
+    staleTime: 1000 * 60 * 50
   });
 }
 
