@@ -74,20 +74,11 @@ export function Student() {
     { title: "Nome", dataIndex: "fullname" },
     { title: "Matrícula", dataIndex: "enrollment" },
     {
-      title: "Turma",
-      dataIndex: "classroom",
+      title: "Permissão",
+      dataIndex: "role",
       render: (value) => (
         <Tag color={value ? "blue" : "red"}>
-          {value ? value.name : "Sem Turma"}
-        </Tag>
-      ),
-    },
-    {
-      title: "Status",
-      dataIndex: "archived",
-      render: (value) => (
-        <Tag color={value ? "default" : "success"}>
-          {value ? "Arquivado" : "Ativo"}
+          {value ? value : "Sem permissão"}
         </Tag>
       ),
     },
@@ -106,20 +97,20 @@ export function Student() {
   return (
     <SideBarTemplate>
       <Layout style={{ padding: "1rem" }}>
-        <Title>Alunos</Title>
+        <Title>Perfis</Title>
         <div style={{ display: "flex", gap: "1rem", justifyContent: "end" }}>
           <div>
             <Input.Search
               onClear={clearFilterSearch}
               onSearch={filtersSearch}
               allowClear
-              placeholder="procurar aluno"
+              placeholder="procurar perfil"
               size="large"
             />
           </div>
           <Link to="/students/new">
             <Button type="primary" size="large">
-              Adicionar Aluno
+              Adicionar Perfil
             </Button>
           </Link>
         </div>

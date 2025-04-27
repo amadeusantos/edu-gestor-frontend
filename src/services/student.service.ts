@@ -1,16 +1,18 @@
-import { request } from "./api";
-import { ClassroomMinimalSchema, PaginationSchema, SexEnum } from "./type";
+import { api, request } from "./api";
+import { PaginationSchema, SexEnum } from "./type";
+import { KeyRoleEnum } from "./users.service";
 
 export interface StudentCreateSchema {
   fullname: string;
   cpf: string;
+  phone: string;
+  date_of_birth: string;
+  enrollment?: string;
   father_name?: string;
   mother_name?: string;
-  responsible: string;
-  email?: string;
-  phone: string;
-  date_of_birth: Date;
-  sex: SexEnum;
+  responsible?: string;
+  sex?: boolean;
+  role: KeyRoleEnum;
 }
 
 export interface StudentUpdateSchema {
@@ -29,29 +31,35 @@ export interface StudentSchema {
   id: string;
   fullname: string;
   cpf: string;
+  phone: string;
+  date_of_birth: string;
+  enrollment?: string;
   father_name?: string;
   mother_name?: string;
-  responsible: string;
-  enrollment: string;
-  email?: string;
-  phone: string;
-  date_of_birth: Date;
-  sex: SexEnum;
-  archived: boolean;
-  classroom?: ClassroomMinimalSchema; 
+  responsible?: string;
+  sex?: boolean;
+  role: KeyRoleEnum;
 }
 
 export async function studentsPagination(
   search?: string,
   page: number = 1,
   size: number = 10
-) {
-  let uri = `/students?size=${size}&page=${page}`;
+): Promise<PaginationSchema<StudentSchema>> {
+  let uri = `/profiles?size=${size}&page_size=${page}`;
   if (search) {
-    uri += `&search=${search}`;
+    uri += `&fullname=${search}`;
   }
 
-  return await request.get<PaginationSchema<StudentSchema>>(uri);
+  const { data, headers } = await api.get<StudentSchema[]>(uri);
+
+  return {
+    results: data,
+    total_items: Number(headers["X-Total-Count"]),
+    page: Number(headers["X-Page"]),
+    size: Number(headers["X-Page-Size"]),
+    total_page: Number(headers["X-Total-Pages"]),
+  };
 }
 
 export async function getStudent(id: string) {

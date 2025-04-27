@@ -8,7 +8,7 @@ export interface LoginSchema {
 }
 
 interface TokenSchema {
-  token: string;
+  access_token: string;
 }
 
 interface RoleSchema {
@@ -19,12 +19,12 @@ interface RoleSchema {
 }
 
 export async function login(auth: LoginSchema) {
-  const { token } = await request.post<TokenSchema>("/auth/login", auth);
-  Cookies.set("token", token);
+  const { access_token } = await request.post<TokenSchema>("/auth/login", auth);
+  Cookies.set("token", access_token);
 }
 
 export async function authenticated() {
-  return await request.get<RoleSchema>("/auth/authenticated");
+  return await request.get<RoleSchema>("/auth/me");
 }
 
 export async function logout() {

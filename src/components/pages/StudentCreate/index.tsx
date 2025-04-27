@@ -24,7 +24,7 @@ export function StudentCreate() {
     <SideBarTemplate>
       <S.FormContainer>
         {contextHolder}
-        <Title>Cadastro de Aluno</Title>
+        <Title>Cadastro de Perfil</Title>
         <Form layout="vertical" onFinish={onFinish}>
           <S.Row>
             <InputForm

@@ -1,5 +1,6 @@
 import { request } from "./api";
 import { PaginationSchema, SexEnum } from "./type";
+import { KeyRoleEnum } from "./users.service";
 
 export interface ProfessorCreateSchema {
   fullname: string;
@@ -23,11 +24,14 @@ export interface ProfessorSchema {
     id: string;
     fullname: string;
     cpf: string;
-    email?: string;
-    phone?: string;
-    date_of_birth: Date;
-    sex: SexEnum;
-    archived: boolean;
+    phone: string;
+    date_of_birth: string;
+    enrollment?: string;
+    father_name?: string;
+    mother_name?: string;
+    responsible?: string;
+    sex?: boolean;
+    role: KeyRoleEnum
 }
 
 export async function professorsPagination(
