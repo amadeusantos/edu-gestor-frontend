@@ -23,6 +23,7 @@ import { Exam } from "./Exam";
 import { ExamCreate } from "./ExamCreate";
 import { ExamCorrection } from "./ExamCorrection";
 import { ExamEdit } from "./ExamEdit";
+import { DisciplineStudent } from "./DisciplineStudent";
 
 export {
   Login,
@@ -50,4 +51,5 @@ export {
   ExamCreate,
   ExamCorrection,
   ExamEdit,
+  DisciplineStudent,
 };

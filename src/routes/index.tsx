@@ -27,6 +27,7 @@ import {
   ExamCreate,
   ExamCorrection,
   ExamEdit,
+  DisciplineStudent,
 } from "../components/pages";
 import { RedirectRouter } from "./RedirectRouter";
 
@@ -86,6 +87,9 @@ export function AppRoutes() {
           />
           <Route path="/agenda/new" element={<AgendaCreate />} />
           <Route path="/agenda/:id" element={<AgendaEdit />} />
+        </Route>
+        <Route element={<PrivateRouter roles={["STUDENT", "RESPONSIBLE"]} />}>
+          <Route path="/disciplines/students" element={<DisciplineStudent />} />
         </Route>
         <Route
           element={

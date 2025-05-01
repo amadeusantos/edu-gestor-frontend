@@ -12,6 +12,7 @@ import {
 } from "phosphor-react";
 import { Link, useLocation } from "react-router";
 import { useLogout, useUser } from "../../../store/auth.store";
+import Cookies from "js-cookie";
 
 const { Sider } = Layout;
 
@@ -85,15 +86,15 @@ const getItems = (role?: string) => {
     case "ADMIN":
       return items;
     case "COORDINATOR":
-      return items.slice(1)
+      return items.slice(1);
     case "PROFESSOR":
-      return items.slice(4)
+      return items.slice(4);
     case "STUDENT":
-      return items.slice(4)
+      return items.slice(4);
     case "RESPONSIBLE":
-      return items.slice(4)
+      return items.slice(4);
     default:
-      return []
+      return [];
   }
 };
 
@@ -102,7 +103,16 @@ export function SideBarTemplate({ children }: SideBarTemplateProps) {
   const { data: user } = useUser();
   const { pathname } = useLocation();
   const select = pathname.split("/")[1];
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, _setCollapsed] = useState(!!Cookies.get("collapsed"));
+
+  const setCollapsed = (value: boolean) => {
+    _setCollapsed(value);
+    if (value) {
+      Cookies.set("collapsed", String(value));
+    } else {
+      Cookies.remove("collapsed");
+    }
+  };
 
   return (
     <Layout hasSider style={{ minHeight: "100vh", width: "100vw" }}>
