@@ -36,3 +36,10 @@ export interface DisciplineMinimalSchema {
   classroom_id: string;
   professor_id?: string;
 }
+
+export interface ScoreMinimalSchema {
+  id: string;
+  value?: string;
+  is_absent: boolean;
+  fullname: string;
+}

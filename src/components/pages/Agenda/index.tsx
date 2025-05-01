@@ -52,7 +52,7 @@ export function Agenda() {
             .filter((act) => dateCheck(date, act.date))
             .map((item) => (
               <li key={item.id} onClick={() => setActivity(item)}>
-                <Tag color="blue-inverse">{item.title}</Tag>
+                <Tag color={item.is_exam? "volcano-inverse" :"blue-inverse"}>{item.title}</Tag>
               </li>
             ))}
       </ul>

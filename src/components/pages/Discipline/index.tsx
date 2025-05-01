@@ -20,6 +20,7 @@ import {
 import { useState } from "react";
 import {
   DotsThreeVertical,
+  Exam,
   Notebook,
   PencilSimpleLine,
   Trash,
@@ -71,6 +72,15 @@ const itemsDropdown = (
           ),
         },
         {
+          key: 5,
+          icon: <Exam size={16} />,
+          label: (
+            <Link to={{ pathname: `/disciplines/${record.id}/exams` }}>
+              Ver Provas
+            </Link>
+          ),
+        },
+        {
           key: 2,
           icon: <Trash size={16} />,
           label: "Remover Disciplina",
@@ -99,6 +109,15 @@ const itemsDropdown = (
               }}
             >
               Adicionar Frequência
+            </Link>
+          ),
+        },
+        {
+          key: 5,
+          icon: <Exam size={16} />,
+          label: (
+            <Link to={{ pathname: `/disciplines/${record.id}/exams` }}>
+              Ver Provas
             </Link>
           ),
         },

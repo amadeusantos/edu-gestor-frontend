@@ -19,6 +19,10 @@ import { FrequencyCreate } from "./FrequencyCreate";
 import { Agenda } from "./Agenda";
 import { AgendaCreate } from "./AgendaCreate";
 import { AgendaEdit } from "./AgendaEdit";
+import { Exam } from "./Exam";
+import { ExamCreate } from "./ExamCreate";
+import { ExamCorrection } from "./ExamCorrection";
+import { ExamEdit } from "./ExamEdit";
 
 export {
   Login,
@@ -42,4 +46,8 @@ export {
   Agenda,
   AgendaCreate,
   AgendaEdit,
+  Exam,
+  ExamCreate,
+  ExamCorrection,
+  ExamEdit,
 };

@@ -51,7 +51,7 @@ export function FrequencyCreate() {
             />
             <DateForm
               label="Data"
-              name="date" 
+              name="date"
               maxDate={dayjs(new Date())}
               rules={[{ required: true, message: "A data é obrigatoria!" }]}
             />
@@ -64,7 +64,10 @@ export function FrequencyCreate() {
             rowKey="id"
             size="large"
             pagination={false}
-            columns={[{ title: "Nome", dataIndex: "fullname" }]}
+            columns={[
+              { title: "Nome", dataIndex: "fullname" },
+              Table.SELECTION_COLUMN,
+            ]}
             dataSource={classroom ? classroom.students : []}
             style={{ padding: "2em" }}
             loading={isLoadingClassroom}

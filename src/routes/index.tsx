@@ -23,6 +23,10 @@ import {
   Agenda,
   AgendaCreate,
   AgendaEdit,
+  Exam,
+  ExamCreate,
+  ExamCorrection,
+  ExamEdit,
 } from "../components/pages";
 import { RedirectRouter } from "./RedirectRouter";
 
@@ -65,6 +69,20 @@ export function AppRoutes() {
           <Route
             path="/disciplines/:disciplineId/frequencies/new/:classroomId"
             element={<FrequencyCreate />}
+          />
+          <Route path="/disciplines/:disciplineId/exams" element={<Exam />} />
+          <Route
+            path="/disciplines/:disciplineId/exams/new"
+            element={<ExamCreate />}
+          />
+          <Route
+            path="/disciplines/:disciplineId/exams/:id/correction"
+            element={<ExamCorrection />}
+          />
+
+          <Route
+            path="/disciplines/:disciplineId/exams/:id"
+            element={<ExamEdit />}
           />
           <Route path="/agenda/new" element={<AgendaCreate />} />
           <Route path="/agenda/:id" element={<AgendaEdit />} />
