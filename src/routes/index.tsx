@@ -28,6 +28,7 @@ import {
   ExamCorrection,
   ExamEdit,
   DisciplineStudent,
+  FrequencyUpdate,
 } from "../components/pages";
 import { RedirectRouter } from "./RedirectRouter";
 
@@ -70,6 +71,11 @@ export function AppRoutes() {
           <Route
             path="/disciplines/:disciplineId/frequencies/new/:classroomId"
             element={<FrequencyCreate />}
+          />
+
+          <Route
+            path="/disciplines/:disciplineId/frequencies/:id/:classroomId"
+            element={<FrequencyUpdate />}
           />
           <Route path="/disciplines/:disciplineId/exams" element={<Exam />} />
           <Route
