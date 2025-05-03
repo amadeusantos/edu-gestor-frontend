@@ -1,26 +1,20 @@
 import { Layout, Table, TableColumnsType, Tag } from "antd";
 import { Title } from "../../ions";
-import { ProfessorMinimalSchema } from "../../../services/activities.service";
 import { SideBarTemplate } from "../../templates/SideBarTemplate";
 import { Content } from "antd/es/layout/layout";
+import { useListStudentsInfo } from "../../../store/students-info.store";
+import { useState } from "react";
+import { useSearchParams } from "react-router";
+import { StudentInfoSchema } from "../../../services/students-info.service";
 
-type DisciplineColumns = {
-  id: string;
-  name: string;
-  professor: ProfessorMinimalSchema;
-  faults: number;
-  classes: number;
-  average_grade: number;
-};
-const columns: TableColumnsType<DisciplineColumns> = [
+const columns: TableColumnsType<StudentInfoSchema> = [
   {
     title: "Disciplina",
-    dataIndex: "name",
+    dataIndex: "discipline_name",
   },
   {
     title: "professor",
-    dataIndex: "professor",
-    render: (professor: ProfessorMinimalSchema) => professor.fullname,
+    dataIndex: "professor_name",
   },
   { title: "Faltas", dataIndex: "faults" },
   { title: "Aulas", dataIndex: "classes" },
@@ -48,31 +42,32 @@ const columns: TableColumnsType<DisciplineColumns> = [
 ];
 
 export function DisciplineStudent() {
+  const [searchParams] = useSearchParams();
+  const [page, setPage] = useState(1);
+  const studentId = searchParams.get("studentId");
+  const { data, isLoading } = useListStudentsInfo(page, 10, studentId);
   return (
     <SideBarTemplate>
       <Layout style={{ padding: "1rem" }}>
         <Title>Disciplinas</Title>
-        <Content style={{ padding: "1rem 0"}}>
-          <Table<DisciplineColumns>
+        <Content style={{ padding: "1rem 0" }}>
+          <Table<StudentInfoSchema>
+            rowKey="id"
             pagination={{
               position: ["bottomCenter"],
-              onChange: () => {},
-              total: 100,
+              onChange: (page) => {
+                setPage(page);
+              },
+              total: data?.total_items,
               pageSize: 10,
               showSizeChanger: false,
             }}
-            columns={columns}
-            dataSource={[
-              {
-                id: "aajf",
-                name: "mathamtica",
-                average_grade: 8.576,
-                classes: 32,
-                faults: 24,
-                professor: { id: "23", fullname: "amadeu" },
-              },
-            ]}
             size="large"
+            columns={columns}
+            dataSource={data ? data.results : []}
+            style={{ padding: "2em" }}
+            loading={isLoading}
+            scroll={{ y: "65vh" }}
           />
         </Content>
       </Layout>

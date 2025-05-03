@@ -69,7 +69,7 @@ export function ExamCorrection() {
     mutateScore({
       id: editingId!,
       is_absent: scoreForm.is_absent,
-      value: scoreForm.value,
+      value: scoreForm.is_absent ? 0 : scoreForm.value,
     });
     setEditingId(undefined);
     setScoreForm({
