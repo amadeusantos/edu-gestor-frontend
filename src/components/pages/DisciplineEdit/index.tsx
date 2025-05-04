@@ -51,10 +51,17 @@ export function DisciplineEdit() {
               label="Professor"
               name="professor_id"
               onSearch={onSearchProfessor}
-              options={professors?.results.map((prof) => ({
-                label: prof.fullname,
-                value: prof.id,
-              }))}
+              options={
+                professors
+                  ? [
+                      ...professors.results.map((prof) => ({
+                        label: prof.fullname,
+                        value: prof.id,
+                      })),
+                      { label: "Sem Professor", value: null },
+                    ]
+                  : [{ label: "Sem Professor", value: null }]
+              }
             />
           </S.Row>
           <S.Row>

@@ -46,10 +46,17 @@ export function DisciplineCreate() {
               label="Professor"
               name="professor_id"
               onSearch={onSearchProfessor}
-              options={professors?.results.map((prof) => ({
-                label: prof.fullname,
-                value: prof.id,
-              }))}
+              options={
+                professors
+                  ? [
+                      ...professors.results.map((prof) => ({
+                        label: prof.fullname,
+                        value: prof.id,
+                      })),
+                      { label: "Sem Professor", value: null },
+                    ]
+                  : [{ label: "Sem Professor", value: null }]
+              }
             />
           </S.Row>
           <S.Row>
@@ -63,7 +70,7 @@ export function DisciplineCreate() {
                 value: clas.id,
               }))}
             />
-            <div/>
+            <div />
           </S.Row>
           <S.ContainerButtons>
             <Link to="/disciplines">
