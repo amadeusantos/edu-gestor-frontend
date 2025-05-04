@@ -1,5 +1,5 @@
 import { request } from "./api";
-import { PaginationSchema, SexEnum } from "./type";
+import { ClassroomMinimalSchema, PaginationSchema, SexEnum } from "./type";
 
 export interface StudentCreateSchema {
   fullname: string;
@@ -38,6 +38,7 @@ export interface StudentSchema {
   date_of_birth: Date;
   sex: SexEnum;
   archived: boolean;
+  classroom?: ClassroomMinimalSchema; 
 }
 
 export async function studentsPagination(

@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, notification } from "antd";
 import Logo from "../../../assets/logo.png";
 import { InputForm } from "../../molecules/InputForm";
 import { useLogin } from "../../../store/auth.store";
@@ -7,13 +7,16 @@ import * as S from "./style";
 import { Loading } from "../../molecules/Loading";
 
 export function Login() {
-  const { mutate, isPending } = useLogin();
+  const [api, contextHolder] = notification.useNotification();
+  const { mutate, isPending } = useLogin({ notification: api });
+
   const onFinish = (values: LoginSchema) => {
     mutate(values);
   };
   const onFinishFailed = () => {};
   return (
     <S.Container>
+      {contextHolder}
       <S.Content
         layout="vertical"
         onFinish={onFinish}

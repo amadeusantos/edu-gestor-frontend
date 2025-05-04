@@ -3,11 +3,11 @@ import { Loading } from "../components/molecules/Loading";
 import { useUser } from "../store/auth.store";
 
 const routers = {
-  STUDENT: "/build",
-  PROFESSOR: "/build",
-  COORDINATOR: "/build",
+  STUDENT: "/disciplines/students",
+  PROFESSOR: "/disciplines",
+  COORDINATOR: "/students",
   ADMIN: "/users",
-  RESPONSIBLE: "/professors",
+  RESPONSIBLE: "/disciplines/students",
 };
 
 export function RedirectRouter() {

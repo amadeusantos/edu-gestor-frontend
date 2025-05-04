@@ -8,6 +8,23 @@ import { ProfessorUpdate } from "./ProfessorUpdate";
 import { Student } from "./Student";
 import { StudentCreate } from "./StudentCreate";
 import { StudentEdit } from "./StudentEdit";
+import { Classroom } from "./Classroom";
+import { ClassroomCreate } from "./ClassroomCreate";
+import { ClassroomEdit } from "./ClassroomEdit";
+import { Discipline } from "./Discipline";
+import { DisciplineCreate } from "./DisciplineCreate";
+import { DisciplineEdit } from "./DisciplineEdit";
+import { Frequency } from "./Frequency";
+import { FrequencyCreate } from "./FrequencyCreate";
+import { FrequencyUpdate } from "./FrequencyUpdate";
+import { Agenda } from "./Agenda";
+import { AgendaCreate } from "./AgendaCreate";
+import { AgendaEdit } from "./AgendaEdit";
+import { Exam } from "./Exam";
+import { ExamCreate } from "./ExamCreate";
+import { ExamCorrection } from "./ExamCorrection";
+import { ExamEdit } from "./ExamEdit";
+import { DisciplineStudent } from "./DisciplineStudent";
 
 export {
   Login,
@@ -20,4 +37,21 @@ export {
   Student,
   StudentCreate,
   StudentEdit,
+  Classroom,
+  ClassroomCreate,
+  ClassroomEdit,
+  Discipline,
+  DisciplineCreate,
+  DisciplineEdit,
+  Frequency,
+  FrequencyCreate,
+  FrequencyUpdate,
+  Agenda,
+  AgendaCreate,
+  AgendaEdit,
+  Exam,
+  ExamCreate,
+  ExamCorrection,
+  ExamEdit,
+  DisciplineStudent,
 };

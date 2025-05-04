@@ -1,4 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import {
   createUser,
   getUser,
@@ -9,6 +14,8 @@ import {
   UserUpdateSchema,
 } from "../services/users.service";
 import { UseMutateProps } from "./interfaces";
+import { ApiError } from "../services/api";
+import { messages } from "./message";
 
 export function useListUsers(page: number, size: number, search?: string) {
   return useQuery({
@@ -21,6 +28,7 @@ export function useFindUser(id: string) {
   return useQuery({
     queryKey: ["users", id],
     queryFn: () => getUser(id),
+    placeholderData: keepPreviousData,
   });
 }
 
@@ -32,7 +40,11 @@ export function useFindUserByEmail(email: string) {
   });
 }
 
-export function useCreateUser({ onSuccess, onError }: UseMutateProps = {}) {
+export function useCreateUser({
+  onSuccess,
+  onError,
+  notification,
+}: UseMutateProps = {}) {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: createUser,
@@ -42,13 +54,28 @@ export function useCreateUser({ onSuccess, onError }: UseMutateProps = {}) {
         onSuccess();
       }
     },
-    onError,
+    onError: (error) => {
+      if (error instanceof ApiError) {
+        if (notification) {
+          notification.error({
+            message: "Error ao criar o usuário",
+            description:
+              error.error_code && messages[error.error_code]
+                ? messages[error.error_code]
+                : "Erro desconhecido!",
+          });
+        }
+      }
+      if (onError) {
+        onError();
+      }
+    },
   });
 }
 
 export function useEditUser(
   id: string,
-  { onSuccess, onError }: UseMutateProps = {}
+  { onSuccess, onError, notification }: UseMutateProps = {}
 ) {
   const queryClient = useQueryClient();
   return useMutation({
@@ -59,7 +86,22 @@ export function useEditUser(
         onSuccess();
       }
     },
-    onError,
+    onError: (error) => {
+      if (error instanceof ApiError) {
+        if (notification) {
+          notification.error({
+            message: "Error ao editar o usuário",
+            description:
+              error.error_code && messages[error.error_code]
+                ? messages[error.error_code]
+                : "Erro desconhecido!",
+          });
+        }
+      }
+      if (onError) {
+        onError();
+      }
+    },
   });
 }
 

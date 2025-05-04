@@ -12,7 +12,10 @@ interface TokenSchema {
 }
 
 interface RoleSchema {
-    role: KeyRoleEnum;
+  id: string;
+  role: KeyRoleEnum;
+  professor_id: string;
+  student_id: string;
 }
 
 export async function login(auth: LoginSchema) {
@@ -21,9 +24,9 @@ export async function login(auth: LoginSchema) {
 }
 
 export async function authenticated() {
-    return await request.get<RoleSchema>("/auth/authenticated");
+  return await request.get<RoleSchema>("/auth/authenticated");
 }
 
 export async function logout() {
-    Cookies.remove("token");
+  Cookies.remove("token");
 }

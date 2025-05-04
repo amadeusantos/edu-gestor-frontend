@@ -1,4 +1,4 @@
-import { Button, Form } from "antd";
+import { Button, Form, notification } from "antd";
 import { SelectForm } from "../../molecules/SelectForm";
 import { SideBarTemplate } from "../../templates/SideBarTemplate";
 import { useCreateStudent } from "../../../store/students.store";
@@ -12,8 +12,10 @@ import { validate as validateCPF } from "validation-br/dist/cpf";
 
 export function StudentCreate() {
   const navigator = useNavigate();
+  const [api, contextHolder] = notification.useNotification();
   const { mutate } = useCreateStudent({
     onSuccess: () => navigator("/students"),
+    notification: api,
   });
   const onFinish = (values: StudentCreateSchema) => {
     mutate(values);
@@ -21,6 +23,7 @@ export function StudentCreate() {
   return (
     <SideBarTemplate>
       <S.FormContainer>
+        {contextHolder}
         <Title>Cadastro de Aluno</Title>
         <Form layout="vertical" onFinish={onFinish}>
           <S.Row>
@@ -34,7 +37,10 @@ export function StudentCreate() {
               name="enrollment"
               rules={[
                 { required: true, message: "A matrícula é obrigatório!" },
-                {max: 50, message: "A matrícula deve contém no máximo 50 caracteres!"}
+                {
+                  max: 50,
+                  message: "A matrícula deve contém no máximo 50 caracteres!",
+                },
               ]}
             />
             <InputForm
