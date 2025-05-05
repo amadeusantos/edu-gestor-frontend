@@ -40,6 +40,30 @@ export function UserUpdate() {
     notification: api,
   });
 
+  const optionsProfessor = professors?.results.map((v) => ({
+    value: v.id,
+    label: v.fullname,
+  }));
+
+  const optionsStudent = students?.results.map((v) => ({
+    value: v.id,
+    label: v.fullname,
+  }));
+
+  if (optionsProfessor && data && data.professor) {
+    optionsProfessor.concat({
+      label: data.professor.fullname,
+      value: data.professor.id,
+    });
+  }
+
+  if (optionsStudent && data && data.student) {
+    optionsStudent.concat({
+      label: data.student.fullname,
+      value: data.student.id,
+    });
+  }
+
   const [form] = Form.useForm();
   const roleValue: KeyRoleEnum = Form.useWatch("role", form);
 
@@ -63,10 +87,7 @@ export function UserUpdate() {
             message: "Selecionar um associado é obrigatório!",
           },
         ]}
-        options={professors?.results.map((v) => ({
-          value: v.id,
-          label: v.fullname,
-        }))}
+        options={optionsProfessor}
       />
     ),
     STUDENT: (
@@ -97,10 +118,7 @@ export function UserUpdate() {
           },
         ]}
         onSearch={onSearchStudent}
-        options={students?.results.map((v) => ({
-          value: v.id,
-          label: v.fullname,
-        }))}
+        options={optionsStudent}
       />
     ),
   };
@@ -121,7 +139,12 @@ export function UserUpdate() {
       <S.Container>
         {contextHolder}
         <Title>Edição de Usuário</Title>
-        <Form layout="vertical" form={form} initialValues={data} onFinish={onFinish}>
+        <Form
+          layout="vertical"
+          form={form}
+          initialValues={data}
+          onFinish={onFinish}
+        >
           <S.Row>
             <InputForm
               label="Email"

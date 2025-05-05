@@ -24,6 +24,23 @@ export function DisciplineEdit() {
     onSuccess: () => navigator("/disciplines"),
   });
 
+  const options = professors
+    ? [
+        ...professors.results.map((prof) => ({
+          label: prof.fullname,
+          value: prof.id,
+        })),
+        { label: "Sem Professor", value: null },
+      ]
+    : [{ label: "Sem Professor", value: null }];
+
+  if (data && data.professor) {
+    options.concat({
+      label: data.professor.fullname,
+      value: data.professor.id,
+    });
+  }
+
   const onSearchProfessor = (value: string) => {
     setSearchProfessor(value === "" ? undefined : value);
   };
@@ -51,17 +68,7 @@ export function DisciplineEdit() {
               label="Professor"
               name="professor_id"
               onSearch={onSearchProfessor}
-              options={
-                professors
-                  ? [
-                      ...professors.results.map((prof) => ({
-                        label: prof.fullname,
-                        value: prof.id,
-                      })),
-                      { label: "Sem Professor", value: null },
-                    ]
-                  : [{ label: "Sem Professor", value: null }]
-              }
+              options={options}
             />
           </S.Row>
           <S.Row>

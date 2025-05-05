@@ -24,6 +24,23 @@ export function ClassroomEdit() {
     onSuccess: () => navigator("/classrooms"),
   });
 
+  const optionsStudents = students?.results.map((student) => ({
+    label: student.fullname,
+    value: student.id,
+  }));
+
+  const studentsIds = students?.results.map((s) => s.id);
+
+  if (optionsStudents && studentsIds && data) {
+    optionsStudents.concat(
+      data.students
+        .filter((s) => studentsIds?.includes(s.id))
+        .map((student) => ({
+          label: student.fullname,
+          value: student.id,
+        }))
+    );
+  }
   const onSearchStudents = (value: string) => {
     setSearchStudents(value === "" ? undefined : value);
   };
@@ -69,10 +86,7 @@ export function ClassroomEdit() {
             name="students_ids"
             onSearch={onSearchStudents}
             mode="multiple"
-            options={students?.results.map((student) => ({
-              label: student.fullname,
-              value: student.id,
-            }))}
+            options={optionsStudents}
           />
 
           <S.ContainerButtons>
