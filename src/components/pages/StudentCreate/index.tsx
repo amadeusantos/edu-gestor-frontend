@@ -30,7 +30,10 @@ export function StudentCreate() {
             <InputForm
               label="Nome"
               name="fullname"
-              rules={[{ required: true, message: "O nome é obrigatório!" }]}
+              rules={[
+                { required: true, message: "O nome é obrigatório!" },
+                { max: 60, message: "O nome deve ter no máximo 60 caracteres" },
+              ]}
             />
             <InputForm
               label="Matrícula"
@@ -51,8 +54,26 @@ export function StudentCreate() {
           </S.Row>
 
           <S.Row>
-            <InputForm label="Nome da mãe" name="mother_name" />
-            <InputForm label="Nome do pai" name="father_name" />
+            <InputForm
+              label="Nome da mãe"
+              name="mother_name"
+              rules={[
+                {
+                  max: 64,
+                  message: "O nome da mãe deve ter no máximo 64 caracteres",
+                },
+              ]}
+            />
+            <InputForm
+              label="Nome do pai"
+              name="father_name"
+              rules={[
+                {
+                  max: 64,
+                  message: "O nome do pai deve ter no máximo 64 caracteres",
+                },
+              ]}
+            />
             <InputForm
               label="Nome do responsável"
               name="responsible"
@@ -60,6 +81,10 @@ export function StudentCreate() {
                 {
                   required: true,
                   message: "O nome do responsável é obrigatório!",
+                },
+                {
+                  max: 64,
+                  message: "O nome do responsável deve ter no máximo 64 caracteres",
                 },
               ]}
             />

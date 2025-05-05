@@ -43,7 +43,13 @@ export function ExamCreate() {
             <InputForm
               label="Título"
               name="title"
-              rules={[{ required: true, message: "O título é obrigatorio!" }]}
+              rules={[
+                { required: true, message: "O título é obrigatorio!" },
+                {
+                  max: 64,
+                  message: "O título deve ter no máximo 64 caracteres",
+                },
+              ]}
             />
 
             <DateForm

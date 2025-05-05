@@ -46,13 +46,20 @@ export function StudentEdit() {
             <InputForm
               label="Nome"
               name="fullname"
-              rules={[{ required: true, message: "O nome é obrigatório!" }]}
+              rules={[
+                { required: true, message: "O nome é obrigatório!" },
+                { max: 60, message: "O nome deve ter no máximo 60 caracteres" },
+              ]}
             />
             <InputForm
               label="Matrícula"
               name="enrollment"
               rules={[
                 { required: true, message: "A matrícula é obrigatório!" },
+                {
+                  max: 50,
+                  message: "A matrícula deve contém no máximo 50 caracteres!",
+                },
               ]}
             />
             <InputForm
@@ -63,8 +70,26 @@ export function StudentEdit() {
           </S.Row>
 
           <S.Row>
-            <InputForm label="Nome da mãe" name="mother_name" />
-            <InputForm label="Nome do pai" name="father_name" />
+            <InputForm
+              label="Nome da mãe"
+              name="mother_name"
+              rules={[
+                {
+                  max: 64,
+                  message: "O nome da mãe deve ter no máximo 64 caracteres",
+                },
+              ]}
+            />
+            <InputForm
+              label="Nome do pai"
+              name="father_name"
+              rules={[
+                {
+                  max: 64,
+                  message: "O nome do pai deve ter no máximo 64 caracteres",
+                },
+              ]}
+            />
             <InputForm
               label="Nome do responsável"
               name="responsible"
@@ -72,6 +97,11 @@ export function StudentEdit() {
                 {
                   required: true,
                   message: "O nome do responsável é obrigatório!",
+                },
+                {
+                  max: 64,
+                  message:
+                    "O nome do responsável deve ter no máximo 64 caracteres",
                 },
               ]}
             />

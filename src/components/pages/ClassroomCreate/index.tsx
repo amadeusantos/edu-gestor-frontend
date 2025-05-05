@@ -53,7 +53,10 @@ export function ClassroomCreate() {
             <InputForm
               label="Nome"
               name="name"
-              rules={[{ required: true, message: "O nome é obrigatório!" }]}
+              rules={[
+                { required: true, message: "O nome é obrigatório!" },
+                { max: 32, message: "O nome deve ter no máximo 32 caracteres" },
+              ]}
             />
             <SelectForm
               label="Turno"

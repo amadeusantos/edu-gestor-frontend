@@ -62,7 +62,10 @@ export function DisciplineEdit() {
             <InputForm
               label="Nome"
               name="name"
-              rules={[{ required: true, message: "O nome é obrigatório!" }]}
+              rules={[
+                { required: true, message: "O nome é obrigatório!" },
+                { max: 64, message: "O nome deve ter no máximo 64 caracteres" },
+              ]}
             />
             <SelectForm
               label="Professor"

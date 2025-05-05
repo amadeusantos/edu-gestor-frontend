@@ -38,7 +38,13 @@ export function ProfessorCreate() {
             <InputForm
               label="Email"
               name="email"
-              rules={[{ type: "email", message: "Email inválido!" }]}
+              rules={[
+                { type: "email", message: "Email inválido!" },
+                {
+                  max: 64,
+                  message: "O email deve ter no máximo 64 caracteres",
+                },
+              ]}
             />
           </S.Row>
 

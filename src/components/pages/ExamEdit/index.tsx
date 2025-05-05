@@ -15,7 +15,8 @@ import { Loading } from "../../molecules/Loading";
 export function ExamEdit() {
   const { disciplineId, id } = useParams();
   const navigator = useNavigate();
-  const { data: discipline, isLoading: isLoadingDiscipline } = useFindDiscipline(disciplineId!);
+  const { data: discipline, isLoading: isLoadingDiscipline } =
+    useFindDiscipline(disciplineId!);
   const { data: exam, isLoading: isLoadingExam } = useFindExam(id!);
 
   const { mutate } = useEditExam(id!, {
@@ -27,7 +28,7 @@ export function ExamEdit() {
   };
 
   if (isLoadingDiscipline || isLoadingExam) {
-    return <Loading />
+    return <Loading />;
   }
 
   return (
@@ -53,7 +54,13 @@ export function ExamEdit() {
             <InputForm
               label="Título"
               name="title"
-              rules={[{ required: true, message: "O título é obrigatorio!" }]}
+              rules={[
+                { required: true, message: "O título é obrigatorio!" },
+                {
+                  max: 64,
+                  message: "O título deve ter no máximo 64 caracteres",
+                },
+              ]}
             />
 
             <DateForm
